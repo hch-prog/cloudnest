@@ -1,11 +1,11 @@
-// lib/auth.ts
+
 import { AuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { prisma } from "@/lib/db";
 import { Adapter } from "next-auth/adapters";
 
-// Define custom session type to include id
+
 declare module "next-auth" {
   interface Session {
     user: {

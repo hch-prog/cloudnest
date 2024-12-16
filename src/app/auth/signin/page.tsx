@@ -4,7 +4,7 @@ import { signIn } from 'next-auth/react';
 import { Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 
-// Separate component for the actual sign-in content
+
 function SignInContent() {
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get('callbackUrl') || '/';
@@ -40,7 +40,7 @@ function SignInContent() {
   );
 }
 
-// Wrap the content in a Suspense boundary
+
 export default function SignIn() {
   return (
     <Suspense fallback={<div>Loading...</div>}>

@@ -30,6 +30,7 @@ export default function Dashboard() {
   const [files, setFiles] = useState<File[]>([])
   const [breadcrumbs, setBreadcrumbs] = useState<Array<{id: string, name: string}>>([])
   const [isLoading, setIsLoading] = useState(true)
+  const [loadingFileId, setLoadingFileId] = useState<string | null>(null)
   const router = useRouter()
 
   const fetchContents = async (folderId: string | null) => {
@@ -74,6 +75,26 @@ export default function Dashboard() {
     fetchContents(currentFolder)
   }
 
+  const handleFileClick = async (file: File) => {
+    try {
+      setLoadingFileId(file.id);
+      const response = await fetch(`/api/download?key=${file.key}`)
+      if (!response.ok) {
+        throw new Error('Failed to get download URL')
+      }
+      
+      const { url } = await response.json()
+      
+      window.open(url, '_blank')
+      
+    
+    } catch (error) {
+      console.error('Error accessing file:', error)
+    } finally {
+      setLoadingFileId(null);
+    }
+  }
+
   if (status === "loading" || isLoading) {
     return (
       <div className="flex justify-center items-center h-64">
@@ -89,7 +110,7 @@ export default function Dashboard() {
 
   return (
     <div>
-      {/* Breadcrumbs */}
+      
       <div className="flex items-center space-x-2 mb-4 text-sm">
         <button 
           onClick={() => setCurrentFolder(null)}
@@ -110,7 +131,7 @@ export default function Dashboard() {
         ))}
       </div>
 
-      {/* Upload and Create Folder buttons */}
+      
       <div className="flex space-x-4 mb-6">
         <FileUpload 
           onUploadComplete={handleRefresh}
@@ -122,14 +143,14 @@ export default function Dashboard() {
         />
       </div>
 
-      {/* Empty state */}
+     
       {folders.length === 0 && files.length === 0 && (
         <div className="text-center py-12">
           <p className="text-gray-500">No files or folders yet</p>
         </div>
       )}
 
-      {/* Grid of folders and files */}
+      
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {folders.map((folder) => (
           <div
@@ -158,10 +179,15 @@ export default function Dashboard() {
         {files.map((file) => (
           <div
             key={file.id}
-            className="p-4 bg-white rounded-lg border border-gray-200"
+            onClick={() => handleFileClick(file)}
+            className="p-4 bg-white rounded-lg border border-gray-200 hover:border-blue-500 cursor-pointer relative"
           >
             <div className="flex items-center space-x-3">
-              <Book className="h-6 w-6 text-gray-400" />
+              {loadingFileId === file.id ? (
+                <div className="h-6 w-6 animate-spin rounded-full border-2 border-gray-300 border-t-blue-600" />
+              ) : (
+                <Book className="h-6 w-6 text-gray-400" />
+              )}
               <div>
                 <span className="text-sm font-medium text-gray-900 block">{file.name}</span>
                 <div className="flex space-x-2 text-xs text-gray-500">

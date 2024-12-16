@@ -15,7 +15,7 @@ export async function GET(request: NextRequest) {
         const folderId = searchParams.get('folderId')
         const userId = session.user.id
 
-        // Fetch folders with additional details
+       
         const folders = await prisma.folder.findMany({
             where: {
                 userId,
@@ -37,7 +37,7 @@ export async function GET(request: NextRequest) {
             }
         })
 
-        // Fetch files with additional details
+        
         const files = await prisma.file.findMany({
             where: {
                 userId,
@@ -55,13 +55,13 @@ export async function GET(request: NextRequest) {
             }
         })
 
-        // Get breadcrumbs
+       
         const breadcrumbs = []
         if (folderId) {
             let currentFolder = await prisma.folder.findUnique({
                 where: { 
                     id: folderId,
-                    userId // Ensure the folder belongs to the user
+                    userId 
                 },
                 select: {
                     id: true,
@@ -84,7 +84,7 @@ export async function GET(request: NextRequest) {
                     currentFolder = await prisma.folder.findUnique({
                         where: { 
                             id: currentFolder.parentId,
-                            userId // Ensure parent folder belongs to the user
+                            userId 
                         },
                         select: {
                             id: true,

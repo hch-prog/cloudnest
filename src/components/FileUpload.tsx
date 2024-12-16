@@ -16,8 +16,8 @@ export default function FileUpload({ onUploadComplete, currentFolderId }: FileUp
     const file = e.target.files?.[0]
     if (!file) return
 
-    // File type and size validation
-    const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
+    
+    const MAX_FILE_SIZE = 10 * 1024 * 1024; 
     const ALLOWED_TYPES = [
       'image/jpeg', 'image/png', 'image/gif', 
       'application/pdf', 'text/plain', 
@@ -36,7 +36,7 @@ export default function FileUpload({ onUploadComplete, currentFolderId }: FileUp
 
     try {
       setIsUploading(true)
-      setUploadError(null)  // Reset any previous errors
+      setUploadError(null)  
 
       const formData = new FormData()
       formData.append('file', file)
@@ -52,14 +52,14 @@ export default function FileUpload({ onUploadComplete, currentFolderId }: FileUp
       const result = await response.json()
 
       if (!response.ok) {
-        // Use the error message from the server response
+        
         throw new Error(result.error || result.details || 'Upload failed')
       }
 
-      // Clear the input
+     
       if (e.target) e.target.value = ''
 
-      // Notify parent component about successful upload
+      
       onUploadComplete?.()
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : String(error)

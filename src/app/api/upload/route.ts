@@ -21,7 +21,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'No file provided' }, { status: 400 })
     }
 
-    // Add file size check
+    
     const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
     if (file.size > MAX_FILE_SIZE) {
       return NextResponse.json({ 
@@ -34,7 +34,7 @@ export async function POST(request: NextRequest) {
     
     const key = `${Date.now()}-${file.name}`
 
-    // Detailed logging for debugging
+
     console.log('Uploading file:', {
       fileName: file.name,
       fileSize: buffer.length,
