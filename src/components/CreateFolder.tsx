@@ -1,6 +1,6 @@
 'use client'
 
-import { Folder } from 'lucide-react'
+import { Folder, X } from 'lucide-react'
 import { useState } from 'react'
 
 interface CreateFolderProps {
@@ -41,37 +41,46 @@ export default function CreateFolder({ onFolderCreated, currentFolderId }: Creat
     <>
       <button
         onClick={() => setIsOpen(true)}
-        className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700"
+        className="relative inline-flex items-center px-6 py-3 text-sm font-medium rounded-xl text-white bg-white/5 hover:bg-white/10 border border-white/10 transition-all duration-300 backdrop-blur-sm"
       >
         <Folder className="h-5 w-5 mr-2" />
         New Folder
       </button>
 
       {isOpen && (
-        <div className="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center">
-          <div className="bg-white rounded-lg p-6 max-w-sm w-full">
-            <h3 className="text-lg font-medium mb-4">Create New Folder</h3>
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50">
+          <div className="relative bg-black/95 rounded-2xl p-6 max-w-sm w-full border border-white/10 shadow-2xl">
+            {/* Close button */}
+            <button
+              onClick={() => setIsOpen(false)}
+              className="absolute top-4 right-4 p-1 text-gray-400 hover:text-white rounded-full hover:bg-white/10 transition-colors"
+            >
+              <X className="h-5 w-5" />
+            </button>
+            
+            <h3 className="text-xl font-medium mb-6 text-white">Create New Folder</h3>
             <form onSubmit={handleSubmit}>
               <input
                 type="text"
                 value={folderName}
                 onChange={(e) => setFolderName(e.target.value)}
-                className="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                placeholder="Folder name"
+                className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/50 text-white placeholder-gray-400"
+                placeholder="Enter folder name"
+                autoFocus
               />
-              <div className="mt-4 flex justify-end space-x-3">
+              <div className="mt-6 flex justify-end space-x-3">
                 <button
                   type="button"
                   onClick={() => setIsOpen(false)}
-                  className="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 border border-gray-300 rounded-md"
+                  className="px-6 py-3 text-sm font-medium text-gray-400 hover:text-white bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl transition-colors"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-md"
+                  className="px-6 py-3 text-sm font-medium text-white bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 rounded-xl transition-colors"
                 >
-                  Create
+                  Create Folder
                 </button>
               </div>
             </form>

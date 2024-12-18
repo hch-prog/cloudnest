@@ -1,3 +1,5 @@
+import { ReactElement } from 'react';
+
 export type FeatureIcon = {
   className?: string;
 };
@@ -5,7 +7,7 @@ export type FeatureIcon = {
 export interface Feature {
   title: string;
   description: string;
-  icon: (props: FeatureIcon) => JSX.Element;
+  icon: (props: FeatureIcon) => ReactElement;
   gradient: {
     from: string;
     to: string;
@@ -26,5 +28,5 @@ export interface PricingTier {
 
 export interface CompanyLogo {
   name: string;
-  icon: JSX.Element;
+  icon: ReactElement;
 }

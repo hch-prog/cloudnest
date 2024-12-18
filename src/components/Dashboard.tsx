@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Book, Folder } from 'lucide-react'
+import { Book, Folder, ChevronRight, Search } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import FileUpload from '@/components/FileUpload'
 import CreateFolder from '@/components/CreateFolder'
@@ -98,7 +98,7 @@ export default function Dashboard() {
   if (status === "loading" || isLoading) {
     return (
       <div className="flex justify-center items-center h-64">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
       </div>
     )
   }
@@ -109,21 +109,31 @@ export default function Dashboard() {
   }
 
   return (
-    <div>
+    <div className="bg-black/95 min-h-screen text-white p-6 rounded-xl backdrop-blur-xl">
+      <div className="mb-8">
+        <div className="relative">
+          <input
+            type="text"
+            placeholder="Search files and folders..."
+            className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/50 text-white placeholder-gray-400"
+          />
+          <Search className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
+        </div>
+      </div>
       
-      <div className="flex items-center space-x-2 mb-4 text-sm">
+      <div className="flex items-center space-x-2 mb-6 text-sm">
         <button 
           onClick={() => setCurrentFolder(null)}
-          className="text-gray-600 hover:text-gray-900"
+          className="text-blue-400 hover:text-blue-300 transition-colors"
         >
           CloudNest
         </button>
         {breadcrumbs.map((crumb) => (
           <div key={crumb.id} className="flex items-center">
-            <span className="mx-2 text-gray-400">/</span>
+            <ChevronRight className="mx-2 h-4 w-4 text-gray-500" />
             <button 
               onClick={() => setCurrentFolder(crumb.id)}
-              className="text-gray-600 hover:text-gray-900"
+              className="text-blue-400 hover:text-blue-300 transition-colors"
             >
               {crumb.name}
             </button>
@@ -131,38 +141,49 @@ export default function Dashboard() {
         ))}
       </div>
 
-      
-      <div className="flex space-x-4 mb-6">
-        <FileUpload 
-          onUploadComplete={handleRefresh}
-          currentFolderId={currentFolder}
-        />
-        <CreateFolder 
-          onFolderCreated={handleRefresh}
-          currentFolderId={currentFolder}
-        />
+      <div className="flex space-x-4 mb-8">
+        <div className="relative group">
+          <div className="absolute -inset-0.5 bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg blur opacity-30 group-hover:opacity-100 transition duration-500"></div>
+          <FileUpload 
+            onUploadComplete={handleRefresh}
+            currentFolderId={currentFolder}
+          />
+        </div>
+        <div className="relative group">
+          <div className="absolute -inset-0.5 bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg blur opacity-30 group-hover:opacity-100 transition duration-500"></div>
+          <CreateFolder 
+            onFolderCreated={handleRefresh}
+            currentFolderId={currentFolder}
+          />
+        </div>
       </div>
 
-     
       {folders.length === 0 && files.length === 0 && (
-        <div className="text-center py-12">
-          <p className="text-gray-500">No files or folders yet</p>
+        <div className="text-center py-16 bg-white/5 rounded-2xl border border-white/10">
+          <div className="flex justify-center mb-4">
+            <div className="p-4 bg-blue-500/10 rounded-full">
+              <Folder className="h-8 w-8 text-blue-400" />
+            </div>
+          </div>
+          <p className="text-gray-400 mb-4">No files or folders yet</p>
+          <p className="text-sm text-gray-500">Upload files or create folders to get started</p>
         </div>
       )}
 
-      
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {folders.map((folder) => (
           <div
             key={folder.id}
             onClick={() => handleFolderClick(folder.id)}
-            className="p-4 bg-white rounded-lg border border-gray-200 hover:border-blue-500 cursor-pointer"
+            className="group p-4 bg-white/5 rounded-xl border border-white/10 hover:border-blue-500/50 cursor-pointer transition-all duration-300 hover:translate-y-[-2px] backdrop-blur-sm"
           >
             <div className="flex items-center space-x-3">
-              <Folder className="h-6 w-6 text-gray-400" />
+              <div className="p-2 bg-blue-500/10 rounded-lg group-hover:bg-blue-500/20 transition-colors">
+                <Folder className="h-6 w-6 text-blue-400" />
+              </div>
               <div>
-                <span className="text-sm font-medium text-gray-900 block">{folder.name}</span>
-                <div className="flex space-x-2 text-xs text-gray-500">
+                <span className="text-sm font-medium text-white block group-hover:text-blue-400 transition-colors">{folder.name}</span>
+                <div className="flex space-x-2 text-xs text-gray-400">
                   <span>{formatDate(folder.createdAt)}</span>
                   {folder.itemCount !== undefined && (
                     <>
@@ -180,17 +201,19 @@ export default function Dashboard() {
           <div
             key={file.id}
             onClick={() => handleFileClick(file)}
-            className="p-4 bg-white rounded-lg border border-gray-200 hover:border-blue-500 cursor-pointer relative"
+            className="group p-4 bg-white/5 rounded-xl border border-white/10 hover:border-blue-500/50 cursor-pointer transition-all duration-300 hover:translate-y-[-2px] backdrop-blur-sm relative"
           >
             <div className="flex items-center space-x-3">
-              {loadingFileId === file.id ? (
-                <div className="h-6 w-6 animate-spin rounded-full border-2 border-gray-300 border-t-blue-600" />
-              ) : (
-                <Book className="h-6 w-6 text-gray-400" />
-              )}
+              <div className="p-2 bg-blue-500/10 rounded-lg group-hover:bg-blue-500/20 transition-colors">
+                {loadingFileId === file.id ? (
+                  <div className="h-6 w-6 animate-spin rounded-full border-2 border-gray-300 border-t-blue-600" />
+                ) : (
+                  <Book className="h-6 w-6 text-blue-400" />
+                )}
+              </div>
               <div>
-                <span className="text-sm font-medium text-gray-900 block">{file.name}</span>
-                <div className="flex space-x-2 text-xs text-gray-500">
+                <span className="text-sm font-medium text-white block group-hover:text-blue-400 transition-colors">{file.name}</span>
+                <div className="flex space-x-2 text-xs text-gray-400">
                   <span>{(file.size / 1024 / 1024).toFixed(2)} MB</span>
                   <span>•</span>
                   <span>{formatDate(file.createdAt)}</span>
@@ -202,4 +225,4 @@ export default function Dashboard() {
       </div>
     </div>
   )
-} 
+}

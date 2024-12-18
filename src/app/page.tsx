@@ -5,17 +5,12 @@ import Image from "next/image";
 import { useState } from 'react';
 import Dashboard from '@/components/Dashboard';
 import { Navbar } from '@/components/landing/Navbar';
-import { features, FeatureCard } from '@/components/landing/Features';
+import { features } from '@/components/landing/Features';
 import { FAQ } from "@/components/landing/FAQ";
 import { Pricing } from "@/components/landing/Pricing";
 import { Testimonials } from "@/components/landing/Testimonials";
 
-const GradientBorder = ({ children }: { children: React.ReactNode }) => (
-  <div className="relative group">
-    <div className="absolute -inset-0.5 bg-gradient-to-r from-blue-500 to-purple-500 opacity-30 group-hover:opacity-100 blur rounded-lg transition duration-1000 group-hover:duration-200" />
-    <div className="relative bg-black p-6 rounded-lg">{children}</div>
-  </div>
-);
+
 
 export default function Home() {
   const { data: session, status } = useSession();
@@ -35,24 +30,19 @@ export default function Home() {
         <Navbar />
 
         <section className="relative pt-24 pb-20 overflow-hidden">
-          {/* Animated background effects */}
           <div className="absolute inset-0">
-            {/* Modernized gradient background */}
             <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,#3b82f680_5%,transparent_50%)]" />
             <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,#8b5cf680_5%,transparent_50%)]" />
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom,#1d4ed880_1%,transparent_40%)]" />
 
-            {/* Subtle animated grid */}
             <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:64px_64px]" />
 
-            {/* Glowing orbs */}
             <div className="absolute top-20 left-1/4 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl animate-pulse-slow" />
             <div className="absolute top-40 right-1/4 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl animate-pulse-slow delay-1000" />
           </div>
 
           <div className="relative mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
             <div className="mx-auto max-w-4xl text-center">
-              {/* Hero Title with refined animation */}
               <div className="relative mb-6">
                 <h1 className="font-bold text-6xl sm:text-7xl lg:text-8xl tracking-tight leading-none">
                   <span className="relative inline-block text-white/90">
@@ -65,13 +55,11 @@ export default function Home() {
                 </h1>
               </div>
 
-              {/* Refined description */}
               <p className="relative mb-12 text-gray-400 text-lg sm:text-xl leading-relaxed max-w-2xl mx-auto">
                 <span className="font-medium text-gray-300">A google drive replacement.</span>
                 <span className="block mt-2">Experience lightning-fast uploads with bank-level security.</span>
               </p>
 
-              {/* Modernized CTA */}
               <div className="flex justify-center items-center gap-6 mb-24">
                 <button
                   onClick={() => signIn("google")}
@@ -88,7 +76,6 @@ export default function Home() {
                 </button>
               </div>
 
-              {/* Refined Features Grid */}
               <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-16">
                 {features.map((feature, index) => (
                   <div
@@ -98,13 +85,10 @@ export default function Home() {
                       animation: `fadeIn 0.5s ease-out ${index * 0.1}s backwards`
                     }}
                   >
-                    {/* Gradient border */}
                     <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-blue-500/10 to-purple-500/10 backdrop-blur-xl border border-white/10" />
 
-                    {/* Hover gradient */}
                     <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-blue-500/0 to-purple-500/0 opacity-0 group-hover:opacity-10 transition-opacity duration-300" />
 
-                    {/* Content */}
                     <div className="relative">
                       <div className="w-12 h-12 mb-4 rounded-xl bg-gradient-to-r from-blue-500 to-purple-500 p-[1px] flex items-center justify-center ml-20">
                         <div className="w-full h-full rounded-xl bg-black/50 flex items-center justify-center">
@@ -134,31 +118,34 @@ export default function Home() {
   }
 
   return (
-    <main className="min-h-screen bg-gray-50">
+    <main className="min-h-screen bg-black">
       <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-        <nav className="flex items-center justify-between mb-8 bg-white p-4 rounded-lg shadow-sm">
+        <nav className="flex items-center justify-between mb-8 bg-black/95 p-6 rounded-2xl border border-white/10 backdrop-blur-xl shadow-2xl">
           <div className="flex items-center">
-            <h1 className="text-2xl font-bold text-gray-900">
-              <span className="text-blue-600">Cloud</span>Nest
+            <h1 className="text-2xl font-bold text-white">
+              <span className="bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent">Cloud</span>
+              <span className="text-white">Nest</span>
             </h1>
           </div>
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-6">
             {session.user?.image && (
-              <div className="flex items-center gap-2">
-                <span className="text-gray-700">{session.user.name}</span>
-                <div className="relative w-10 h-10 rounded-full overflow-hidden">
-                  <Image
-                    src={session.user.image}
-                    alt="Profile picture"
-                    fill
-                    className="object-cover"
-                  />
+              <div className="flex items-center gap-3"> 
+                <span className="text-gray-300">{session.user.name}</span>
+                <div className="relative w-10 h-10 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 p-[1px]">
+                  <div className="relative w-full h-full rounded-full overflow-hidden">
+                    <Image
+                      src={session.user.image}
+                      alt="Profile picture"
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
                 </div>
               </div>
             )}
             <button
               onClick={() => signOut()}
-              className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors text-sm font-medium"
+              className="px-6 py-3 bg-white/5 text-white rounded-xl border border-white/10 hover:bg-white/10 transition-all duration-300 text-sm font-medium backdrop-blur-sm hover:scale-[1.02]"
             >
               Sign Out
             </button>

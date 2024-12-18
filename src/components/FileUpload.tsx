@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Upload, AlertTriangle } from 'lucide-react'
+import { Upload, AlertTriangle, X } from 'lucide-react'
 
 interface FileUploadProps {
   onUploadComplete?: () => void
@@ -71,8 +71,8 @@ export default function FileUpload({ onUploadComplete, currentFolderId }: FileUp
   }
 
   return (
-    <div>
-      <label className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 cursor-pointer">
+    <div className="relative">
+      <label className="relative inline-flex items-center px-6 py-3 text-sm font-medium rounded-xl text-white bg-white/5 hover:bg-white/10 border border-white/10 transition-all duration-300 cursor-pointer backdrop-blur-sm">
         <Upload className="h-5 w-5 mr-2" />
         {isUploading ? 'Uploading...' : 'Upload File'}
         <input
@@ -83,9 +83,17 @@ export default function FileUpload({ onUploadComplete, currentFolderId }: FileUp
         />
       </label>
       {uploadError && (
-        <div className="text-red-500 mt-2 flex items-center">
-          <AlertTriangle className="mr-2" />
-          {uploadError}
+        <div className="absolute top-full left-0 mt-2 p-3 bg-red-500/10 border border-red-500/20 rounded-xl backdrop-blur-sm">
+          <div className="flex items-center text-red-400 text-sm">
+            <AlertTriangle className="h-4 w-4 mr-2" />
+            {uploadError}
+            <button 
+              onClick={() => setUploadError(null)}
+              className="ml-2 p-1 hover:bg-red-500/20 rounded-full transition-colors"
+            >
+              <X className="h-4 w-4" />
+            </button>
+          </div>
         </div>
       )}
     </div>

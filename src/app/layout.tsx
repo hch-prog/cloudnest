@@ -14,8 +14,55 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "CloudNest",
-  description: "CloudNest is a cloud storage platform that allows you to store and share your files with ease.",
+  metadataBase: new URL('https://cloudnest-drive.vercel.app'),
+  title: "CloudNest - A google drive insipred clone",
+  description: "Experience lightning-fast uploads. CloudNest is your next-generation file management solution, where you can store and share files with ease.",
+  keywords: ["file management", "cloud storage", "secure storage", "file sharing"],
+  authors: [{ name: "CloudNest Team" }],
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "https://cloudnest-drive.vercel.app",
+    siteName: "CloudNest",
+    title: "CloudNest - A google drive insipred clone",
+    description: "Experience lightning-fast uploads. CloudNest is your next-generation file management solution, where you can store and share files with ease.",
+    images: [
+      {
+        url: "https://cloudnest-drive.vercel.app/cloudnest.png",
+        width: 1200,
+        height: 630,
+        alt: "CloudNest Preview",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "CloudNest - A google drive insipred clone",
+    description: "Experience lightning-fast uploads. CloudNest is your next-generation file management solution, where you can store and share files with ease.",
+    images: ["https://cloudnest-drive.vercel.app/cloudnest.png"],
+    creator: "@cloudnest",
+  },
+  icons: {
+    icon: "/favicon.ico",
+    shortcut: "/favicon-16x16.png",
+    apple: "/apple-touch-icon.png",
+  },
+  manifest: "/site.webmanifest",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  verification: {
+    google: "your-google-site-verification",
+    yandex: "your-yandex-verification",
+  },
 };
 
 export default function RootLayout({

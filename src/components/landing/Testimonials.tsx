@@ -24,10 +24,10 @@ const testimonials: Testimonial[] = [
     quote: "The security features and ease of use make CloudNest the perfect solution for our growing team's needs."
   },
   {
-    name: "Emma Davis",
+    name: "Oliver Brown",
     role: "Creative Director",
     company: "DesignHub",
-    image: "/testimonials/testimonial3.jpg",
+    image: "/testimonials/testimonial3.png",
     quote: "We've tried many file management solutions, but CloudNest's intelligent features and clean interface stand out."
   }
 ];

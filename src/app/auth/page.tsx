@@ -1,9 +1,9 @@
 'use client';
 
 import Link from "next/link";
-import Image from "next/image";
 import { signIn } from 'next-auth/react';
 import { useSearchParams } from 'next/navigation';
+import { Suspense } from 'react';
 
 const features = [
   {
@@ -44,25 +44,22 @@ const features = [
   },
 ];
 
-export default function SignIn() {
+function AuthContent() {
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get('callbackUrl') || '/';
 
   return (
     <div className="flex min-h-screen bg-black">
-      {/* Left Section - Feature Showcase */}
+      
       <div className="relative lg:flex flex-1 hidden overflow-hidden">
         <div className="absolute inset-0 bg-mesh opacity-20" />
 
-        {/* Animated Gradient Background */}
         <div className="absolute inset-0">
           <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 via-purple-500/10 to-pink-500/20 animate-pulse" />
           <div className="bg-[radial-gradient(circle_at_30%_30%,_var(--tw-gradient-stops))] absolute inset-0 from-blue-500/10 via-transparent to-transparent" />
         </div>
 
-        {/* Content */}
         <div className="relative flex flex-col justify-center items-center p-20 w-full h-full">
-          {/* Hero Section */}
           <div className="mb-12 text-center">
             <h2 className="mb-4 font-bold text-4xl text-white">
               Welcome to{" "}
@@ -75,7 +72,6 @@ export default function SignIn() {
             </p>
           </div>
 
-          {/* Features Grid */}
           <div className="gap-6 grid grid-cols-2 w-full max-w-2xl">
             {features.map((feature) => (
               <div
@@ -101,23 +97,19 @@ export default function SignIn() {
         </div>
       </div>
 
-      {/* Right Section - Auth Form */}
       <div className="flex flex-1 justify-center items-center">
         <div className="px-8 w-full max-w-md">
-          {/* Logo */}
           <Link href="/" className="flex items-center gap-2 mb-12">
             <span className="font-bold text-2xl text-white">
               Cloud<span className="text-blue-500">Nest</span>
             </span>
           </Link>
 
-          {/* Welcome Text */}
           <h1 className="mb-2 font-bold text-3xl text-white">Welcome back</h1>
           <p className="mb-8 text-gray-400">
             Sign in to access your files and continue your work
           </p>
 
-          {/* Google Sign In Button */}
           <button
             className="flex justify-center items-center gap-3 border-white/10 bg-white/5 hover:bg-white/10 px-4 py-3 border rounded-lg w-full text-white transition-all duration-300 group"
             onClick={() => signIn('google', { callbackUrl })}
@@ -145,5 +137,17 @@ export default function SignIn() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function AuthPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-black flex items-center justify-center">
+        <div className="text-white text-lg">Loading...</div>
+      </div>
+    }>
+      <AuthContent />
+    </Suspense>
   );
 }

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="1200" height="630" fill="#000000"/>
+  
+  <!-- Gradient Background -->
+  <path d="M0 0h1200v630H0z" fill="url(#gradient1)" />
+  <path d="M0 0h1200v630H0z" fill="url(#gradient2)" opacity="0.4" />
+  
+  <!-- Grid Pattern -->
+  <path d="M0 0h1200v630H0z" stroke="url(#grid)" stroke-width="1" fill="none" opacity="0.1" />
+  
+  <!-- Content -->
+  <g transform="translate(100, 180)">
+    <!-- Logo and Title -->
+    <text x="0" y="0" fill="url(#text-gradient)" font-family="system-ui" font-size="72" font-weight="bold">
+      CloudNest
+    </text>
+    
+    <!-- Tagline -->
+    <text x="0" y="80" fill="#FFFFFF" font-family="system-ui" font-size="36" opacity="0.9">
+      Modern File Management Solution
+    </text>
+    
+    <!-- Features -->
+    <text x="0" y="160" fill="#A0AEC0" font-family="system-ui" font-size="24">
+      ⚡️ Lightning-fast uploads  •  🔒 Bank-level security  •  🤖 AI-powered
+    </text>
+  </g>
+  
+  <!-- Decorative Elements -->
+  <circle cx="900" cy="200" r="160" fill="url(#glow1)" opacity="0.15" />
+  <circle cx="300" cy="450" r="120" fill="url(#glow2)" opacity="0.15" />
+  
+  <!-- Definitions -->
+  <defs>
+    <!-- Background Gradients -->
+    <linearGradient id="gradient1" x1="0" y1="0" x2="1200" y2="630">
+      <stop offset="0%" stop-color="#1A365D"/>
+      <stop offset="100%" stop-color="#000000"/>
+    </linearGradient>
+    
+    <radialGradient id="gradient2" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#3B82F6"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity="0"/>
+    </radialGradient>
+    
+    <!-- Text Gradient -->
+    <linearGradient id="text-gradient" x1="0" y1="0" x2="400" y2="0">
+      <stop offset="0%" stop-color="#60A5FA"/>
+      <stop offset="100%" stop-color="#3B82F6"/>
+    </linearGradient>
+    
+    <!-- Glow Effects -->
+    <radialGradient id="glow1" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#3B82F6"/>
+      <stop offset="100%" stop-color="#000000"/>
+    </radialGradient>
+    
+    <radialGradient id="glow2" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#8B5CF6"/>
+      <stop offset="100%" stop-color="#000000"/>
+    </radialGradient>
+    
+    <!-- Grid Pattern -->
+    <pattern id="grid" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#FFFFFF" stroke-width="0.5"/>
+    </pattern>
+  </defs>
+</svg>
