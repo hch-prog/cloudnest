@@ -16,11 +16,11 @@ export default function FileUpload({ onUploadComplete, currentFolderId }: FileUp
     const file = e.target.files?.[0]
     if (!file) return
 
-    
-    const MAX_FILE_SIZE = 10 * 1024 * 1024; 
+
+    const MAX_FILE_SIZE = 10 * 1024 * 1024;
     const ALLOWED_TYPES = [
-      'image/jpeg', 'image/png', 'image/gif', 
-      'application/pdf', 'text/plain', 
+      'image/jpeg', 'image/png', 'image/gif',
+      'application/pdf', 'text/plain',
       'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
     ];
 
@@ -36,7 +36,7 @@ export default function FileUpload({ onUploadComplete, currentFolderId }: FileUp
 
     try {
       setIsUploading(true)
-      setUploadError(null)  
+      setUploadError(null)
 
       const formData = new FormData()
       formData.append('file', file)
@@ -52,18 +52,18 @@ export default function FileUpload({ onUploadComplete, currentFolderId }: FileUp
       const result = await response.json()
 
       if (!response.ok) {
-        
+
         throw new Error(result.error || result.details || 'Upload failed')
       }
 
-     
+
       if (e.target) e.target.value = ''
 
-      
+
       onUploadComplete?.()
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : String(error)
-      
+
       setUploadError(errorMessage)
     } finally {
       setIsUploading(false)
@@ -72,9 +72,19 @@ export default function FileUpload({ onUploadComplete, currentFolderId }: FileUp
 
   return (
     <div className="relative">
-      <label className="relative inline-flex items-center px-6 py-3 text-sm font-medium rounded-xl text-white bg-white/5 hover:bg-white/10 border border-white/10 transition-all duration-300 cursor-pointer backdrop-blur-sm">
-        <Upload className="h-5 w-5 mr-2" />
-        {isUploading ? 'Uploading...' : 'Upload File'}
+      <label className="inline-flex relative items-center border-white/10 bg-gradient-to-r from-blue-500/10 hover:from-blue-500/20 to-purple-500/10 hover:to-purple-500/20 hover:shadow-lg hover:shadow-blue-500/10 backdrop-blur-sm px-6 py-3 border hover:border-blue-500/50 rounded-xl font-medium text-white transition-all hover:translate-y-[-2px] duration-300 cursor-pointer"
+      >
+        {isUploading ? (
+          <>
+            <div className="border-2 mr-2 border-t-transparent border-blue-400 rounded-full w-5 h-5 animate-spin" />
+            Uploading...
+          </>
+        ) : (
+          <>
+            <Upload className="mr-2 w-5 h-5 text-blue-400" />
+            Upload File
+          </>
+        )}
         <input
           type="file"
           className="hidden"
@@ -83,15 +93,16 @@ export default function FileUpload({ onUploadComplete, currentFolderId }: FileUp
         />
       </label>
       {uploadError && (
-        <div className="absolute top-full left-0 mt-2 p-3 bg-red-500/10 border border-red-500/20 rounded-xl backdrop-blur-sm">
+        <div className="top-full left-0 absolute bg-red-500/10 backdrop-blur-sm mt-3 p-4 border border-red-500/20 rounded-xl animate-slideDown"
+        >
           <div className="flex items-center text-red-400 text-sm">
-            <AlertTriangle className="h-4 w-4 mr-2" />
-            {uploadError}
-            <button 
+            <AlertTriangle className="flex-shrink-0 mr-2 w-4 h-4" />
+            <span className="mr-2">{uploadError}</span>
+            <button
               onClick={() => setUploadError(null)}
-              className="ml-2 p-1 hover:bg-red-500/20 rounded-full transition-colors"
+              className="hover:bg-red-500/20 ml-auto p-1.5 rounded-full transition-colors"
             >
-              <X className="h-4 w-4" />
+              <X className="w-4 h-4" />
             </button>
           </div>
         </div>

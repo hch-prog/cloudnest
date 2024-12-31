@@ -46,10 +46,10 @@ const features = [
 
 function AuthContent() {
   const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get('callbackUrl') || '/';
+  const callbackUrl = searchParams.get('callbackUrl') || '/dashboard';
 
   return (
-    <div className="flex min-h-screen bg-black">
+    <div className="flex bg-black min-h-screen">
       
       <div className="relative lg:flex flex-1 hidden overflow-hidden">
         <div className="absolute inset-0 bg-mesh opacity-20" />
@@ -114,7 +114,7 @@ function AuthContent() {
             className="flex justify-center items-center gap-3 border-white/10 bg-white/5 hover:bg-white/10 px-4 py-3 border rounded-lg w-full text-white transition-all duration-300 group"
             onClick={() => signIn('google', { callbackUrl })}
           >
-            <svg className="w-5 h-5 opacity-80 group-hover:opacity-100 transition-opacity" viewBox="0 0 24 24">
+            <svg className="opacity-80 group-hover:opacity-100 w-5 h-5 transition-opacity" viewBox="0 0 24 24">
               <path
                 fill="currentColor"
                 d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
@@ -143,8 +143,8 @@ function AuthContent() {
 export default function AuthPage() {
   return (
     <Suspense fallback={
-      <div className="min-h-screen bg-black flex items-center justify-center">
-        <div className="text-white text-lg">Loading...</div>
+      <div className="flex justify-center items-center bg-black min-h-screen">
+        <div className="text-lg text-white">Loading...</div>
       </div>
     }>
       <AuthContent />

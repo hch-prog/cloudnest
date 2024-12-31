@@ -1,4 +1,7 @@
+'use client';
+
 import { useState } from 'react';
+import { ChevronDown } from 'lucide-react';
 
 interface FAQItem {
   question: string;
@@ -32,52 +35,86 @@ const faqItems: FAQItem[] = [
   }
 ];
 
+const FAQCard = ({
+  item,
+  isOpen,
+  onClick
+}: {
+  item: FAQItem;
+  isOpen: boolean;
+  onClick: () => void;
+}) => (
+  <div className="relative group">
+    {/* Background with animated gradient */}
+    <div className="group-hover:from-blue-600/20 group-hover:via-blue-500/20 group-hover:to-blue-400/20 absolute inset-0 border-white/10 bg-gradient-to-r from-blue-600/10 via-blue-500/10 to-blue-400/10 backdrop-blur-xl border rounded-2xl transition-colors duration-300" />
+
+    {/* Content */}
+    <div
+      className="relative p-6 rounded-2xl transition-all hover:translate-y-[-2px] duration-300 cursor-pointer"
+      onClick={onClick}
+      role="button"
+      aria-expanded={isOpen}
+      tabIndex={0}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          onClick();
+          e.preventDefault();
+        }
+      }}
+    >
+      <div className="flex justify-between items-center gap-4">
+        <h4 className="font-semibold text-white">{item.question}</h4>
+        <ChevronDown
+          className={`w-5 h-5 text-blue-400 transition-transform duration-300 flex-shrink-0 ${isOpen ? 'transform rotate-180' : ''
+            }`}
+        />
+      </div>
+      <div
+        className={`mt-2 text-gray-400 text-sm leading-relaxed transition-all duration-300 ${isOpen ? 'max-h-48 opacity-100' : 'max-h-0 opacity-0'
+          }`}
+      >
+        {item.answer}
+      </div>
+    </div>
+  </div>
+);
+
 export function FAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   return (
-    <section className="py-24 relative">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold text-white mb-4">Frequently Asked Questions</h2>
-          <p className="text-gray-400">Everything you need to know about CloudNest</p>
+    <section className="relative py-24 overflow-hidden">
+  
+      <div className="absolute inset-0">
+        <div className="bg-[radial-gradient(ellipse_at_top_right,#1d4ed880_5%,transparent_60%)] absolute inset-0" />
+        <div className="bg-[radial-gradient(ellipse_at_top_left,#3b82f680_5%,transparent_60%)] absolute inset-0" />
+      </div>
+
+      <div className="relative mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+     
+        <div className="mb-16 text-center">
+          <h2 className="mb-4 font-bold text-4xl text-white">
+            Frequently Asked Questions
+          </h2>
+          <p className="text-gray-400 text-lg">
+            Everything you need to know about CloudNest
+          </p>
         </div>
-        <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+
+      
+        <div className="gap-8 grid md:grid-cols-2 mx-auto max-w-4xl">
           {faqItems.map((item, index) => (
-            <div 
+            <FAQCard
               key={index}
-              className="relative group"
-            >
-              <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-blue-500/10 to-purple-500/10 backdrop-blur-xl border border-white/10" />
-              <div 
-                className="relative p-6 rounded-2xl cursor-pointer transition-all duration-300 hover:translate-y-[-2px]"
-                onClick={() => setOpenIndex(openIndex === index ? null : index)}
-              >
-                <div className="flex justify-between items-center">
-                  <h4 className="text-white font-semibold pr-8">{item.question}</h4>
-                  <svg 
-                    className={`w-5 h-5 text-gray-400 transition-transform duration-300 ${
-                      openIndex === index ? 'transform rotate-180' : ''
-                    }`}
-                    fill="none" 
-                    viewBox="0 0 24 24" 
-                    stroke="currentColor"
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                  </svg>
-                </div>
-                <div 
-                  className={`mt-2 text-gray-400 overflow-hidden transition-all duration-300 ${
-                    openIndex === index ? 'max-h-48 opacity-100' : 'max-h-0 opacity-0'
-                  }`}
-                >
-                  {item.answer}
-                </div>
-              </div>
-            </div>
+              item={item}
+              isOpen={openIndex === index}
+              onClick={() => setOpenIndex(openIndex === index ? null : index)}
+            />
           ))}
         </div>
       </div>
     </section>
   );
 }
+
+export default FAQ;

@@ -1,3 +1,7 @@
+'use client';
+
+import { Check, ChevronRight } from 'lucide-react';
+
 interface PricingPlan {
   name: string;
   price: string;
@@ -49,59 +53,93 @@ const pricingPlans: PricingPlan[] = [
   },
 ];
 
+const PricingCard = ({ plan }: { plan: PricingPlan }) => (
+  <div className="relative group">
+    {/* Card Background */}
+    <div 
+      className={`absolute inset-0 rounded-2xl backdrop-blur-xl border transition-all duration-300 
+        ${plan.popular 
+          ? 'border-blue-500/20 bg-gradient-to-br from-blue-600/20 via-blue-500/20 to-blue-400/20 group-hover:from-blue-600/30 group-hover:via-blue-500/30 group-hover:to-blue-400/30' 
+          : 'border-white/10 bg-gradient-to-br from-slate-800/50 via-slate-800/30 to-slate-800/50 group-hover:from-slate-800/70 group-hover:via-slate-800/50 group-hover:to-slate-800/70'
+        }`}
+    />
+
+    {/* Popular Badge */}
+    {plan.popular && (
+      <div className="-top-4 left-1/2 absolute bg-gradient-to-r from-blue-600 to-blue-400 px-4 py-1.5 rounded-full -translate-x-1/2">
+        <span className="relative font-semibold text-sm text-white">Most Popular</span>
+      </div>
+    )}
+
+    {/* Card Content */}
+    <div className="relative p-8 rounded-2xl transition-all hover:translate-y-[-4px] duration-300">
+      {/* Header */}
+      <div className="mb-8">
+        <h3 className="mb-2 font-bold text-2xl text-white">{plan.name}</h3>
+        <div className="flex items-baseline">
+          <span className="font-bold text-4xl text-white">{plan.price}</span>
+          <span className="ml-2 text-gray-400 text-lg">/month</span>
+        </div>
+      </div>
+
+      {/* Features List */}
+      <ul className="space-y-4 mb-8">
+        {plan.features.map((feature) => (
+          <li key={feature} className="flex items-center text-gray-300 group/item">
+            <div className="group-hover/item:bg-blue-500/20 bg-blue-500/10 mr-3 p-1 rounded-full transition-colors">
+              <Check className="w-4 h-4 text-blue-400" />
+            </div>
+            <span className="group-hover/item:text-white transition-colors">
+              {feature}
+            </span>
+          </li>
+        ))}
+      </ul>
+
+      {/* CTA Button */}
+      <button 
+        className={`w-full py-3 px-4 rounded-xl font-medium transition-all duration-300 flex items-center justify-center group/button
+          ${plan.popular 
+            ? 'bg-gradient-to-r from-blue-600 to-blue-400 hover:from-blue-700 hover:to-blue-500 text-white shadow-lg shadow-blue-500/20 hover:shadow-blue-500/40' 
+            : 'bg-white/5 text-white hover:bg-white/10 border border-white/10'
+          }`}
+      >
+        {plan.buttonText}
+        <ChevronRight className="ml-2 w-4 h-4 transition-transform group-hover/button:translate-x-1 duration-300" />
+      </button>
+    </div>
+  </div>
+);
+
 export function Pricing() {
   return (
-    <section className="py-24 relative">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold text-white mb-4">Simple, Transparent Pricing</h2>
-          <p className="text-gray-400">Choose the perfect plan for your needs</p>
+    <section className="relative py-24 overflow-hidden">
+      {/* Background Effects */}
+      <div className="absolute inset-0">
+        <div className="bg-[radial-gradient(ellipse_at_top_right,#1d4ed880_5%,transparent_60%)] absolute inset-0" />
+        <div className="bg-[radial-gradient(ellipse_at_top_left,#3b82f680_5%,transparent_60%)] absolute inset-0" />
+      </div>
+
+      <div className="relative mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+        {/* Section Header */}
+        <div className="mb-16 text-center">
+          <h2 className="mb-4 font-bold text-4xl text-white">
+            Simple, Transparent Pricing
+          </h2>
+          <p className="mx-auto max-w-2xl text-gray-400 text-lg">
+            Choose the perfect plan for your needs. Start with our free tier and upgrade as you grow.
+          </p>
         </div>
-        <div className="grid md:grid-cols-3 gap-8">
+
+        {/* Pricing Cards Grid */}
+        <div className="gap-8 grid md:grid-cols-2 lg:grid-cols-3 mx-auto max-w-5xl">
           {pricingPlans.map((plan) => (
-            <div 
-              key={plan.name}
-              className="relative group p-8 rounded-2xl transition-all duration-300 hover:translate-y-[-4px]"
-            >
-              <div className={`absolute inset-0 rounded-2xl backdrop-blur-xl border border-white/10 ${
-                plan.popular 
-                  ? 'bg-gradient-to-r from-blue-500/20 to-purple-500/20' 
-                  : 'bg-gradient-to-r from-blue-500/10 to-purple-500/10'
-              }`} />
-              {plan.popular && (
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full text-white text-sm font-medium">
-                  Most Popular
-                </div>
-              )}
-              <div className="relative">
-                <h3 className="text-2xl font-bold text-white mb-4">{plan.name}</h3>
-                <p className="text-4xl font-bold text-white mb-6">
-                  {plan.price}<span className="text-lg font-normal text-gray-400">/mo</span>
-                </p>
-                <ul className="space-y-4 mb-8">
-                  {plan.features.map((feature) => (
-                    <li key={feature} className="flex items-center text-gray-300">
-                      <svg className="w-5 h-5 mr-2 text-blue-500" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                      </svg>
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
-                <button 
-                  className={`w-full py-3 rounded-xl transition-colors ${
-                    plan.popular 
-                      ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-white hover:from-blue-600 hover:to-purple-600' 
-                      : 'bg-white/10 text-white hover:bg-white/20'
-                  }`}
-                >
-                  {plan.buttonText}
-                </button>
-              </div>
-            </div>
+            <PricingCard key={plan.name} plan={plan} />
           ))}
         </div>
       </div>
     </section>
   );
 }
+
+export default Pricing;

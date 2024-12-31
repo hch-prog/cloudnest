@@ -41,44 +41,44 @@ export default function CreateFolder({ onFolderCreated, currentFolderId }: Creat
     <>
       <button
         onClick={() => setIsOpen(true)}
-        className="relative inline-flex items-center px-6 py-3 text-sm font-medium rounded-xl text-white bg-white/5 hover:bg-white/10 border border-white/10 transition-all duration-300 backdrop-blur-sm"
+        className="inline-flex relative items-center border-white/10 bg-white/5 hover:bg-white/10 backdrop-blur-sm px-6 py-3 border rounded-xl font-medium text-sm text-white transition-all duration-300"
       >
-        <Folder className="h-5 w-5 mr-2" />
+        <Folder className="mr-2 w-5 h-5" />
         New Folder
       </button>
 
       {isOpen && (
-        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50">
-          <div className="relative bg-black/95 rounded-2xl p-6 max-w-sm w-full border border-white/10 shadow-2xl">
+        <div className="z-50 fixed inset-0 flex justify-center items-center bg-black/50 backdrop-blur-sm">
+          <div className="relative border-white/10 bg-black/95 shadow-2xl p-6 border rounded-2xl w-full max-w-sm">
             {/* Close button */}
             <button
               onClick={() => setIsOpen(false)}
-              className="absolute top-4 right-4 p-1 text-gray-400 hover:text-white rounded-full hover:bg-white/10 transition-colors"
+              className="top-4 right-4 absolute hover:bg-white/10 p-1 rounded-full text-gray-400 hover:text-white transition-colors"
             >
-              <X className="h-5 w-5" />
+              <X className="w-5 h-5" />
             </button>
             
-            <h3 className="text-xl font-medium mb-6 text-white">Create New Folder</h3>
+            <h3 className="mb-6 font-medium text-white text-xl">Create New Folder</h3>
             <form onSubmit={handleSubmit}>
               <input
                 type="text"
                 value={folderName}
                 onChange={(e) => setFolderName(e.target.value)}
-                className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/50 text-white placeholder-gray-400"
+                className="border-white/10 bg-white/5 px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-500/50 w-full text-white focus:outline-none placeholder-gray-400"
                 placeholder="Enter folder name"
                 autoFocus
               />
-              <div className="mt-6 flex justify-end space-x-3">
+              <div className="flex justify-end space-x-3 mt-6">
                 <button
                   type="button"
                   onClick={() => setIsOpen(false)}
-                  className="px-6 py-3 text-sm font-medium text-gray-400 hover:text-white bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl transition-colors"
+                  className="border-white/10 bg-white/5 hover:bg-white/10 px-6 py-3 border rounded-xl font-medium text-gray-400 text-sm hover:text-white transition-colors"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-6 py-3 text-sm font-medium text-white bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 rounded-xl transition-colors"
+                  className="bg-gradient-to-r from-blue-500 hover:from-blue-600 to-blue-600 hover:to-blue-700 px-6 py-3 rounded-xl font-medium text-sm text-white transition-colors"
                 >
                   Create Folder
                 </button>
